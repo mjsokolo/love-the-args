@@ -1,19 +1,17 @@
 import { nanoid } from '@reduxjs/toolkit';
 
-export default function BlocksReducer(
-  state = {
-    caret: -1,
-    activeId: 'id1',
-    order: ['id1'],
-    txts: {
-      id1: '',
-    },
-    notes: { id1: '' },
-    views: { id1: false },
-    positions: { id1: [0, 0] },
-  },
-  action
-) {
+const initialState = {
+  caret: -1,
+  activeId: 'id1',
+  order: ['id1'],
+  txts: { id1: '' },
+  notes: { id1: '' },
+  views: { id1: false },
+  positions: { id1: [0, 0] },
+  graph: { connections: [], mode: null, selectedNode: null },
+};
+
+export default function BlocksReducer(state = initialState, action) {
   switch (action.type) {
     case 'updateId':
       return {
@@ -56,6 +54,18 @@ export default function BlocksReducer(
       const id1 = state.order[idx - 1];
       const newOrder = [...state.order];
       newOrder.splice(idx, 1);
+
+      const newConnections = state.graph.connections
+        .map((connection) =>
+          connection.map((id) => {
+            if (id === id2) {
+              return id1;
+            }
+            return id;
+          })
+        )
+        .filter((connection) => connection[0] !== connection[1]);
+
       return {
         ...state,
         activeId: id1,
@@ -65,6 +75,7 @@ export default function BlocksReducer(
           ...state.notes,
           [id1]: state.notes[id1] + state.notes[id2],
         },
+        graph: { ...state.graph, connections: newConnections },
       };
     }
     case 'toggleNote': {
@@ -80,6 +91,30 @@ export default function BlocksReducer(
       const { id, x, y } = action.payload;
       return { ...state, positions: { ...state.positions, [id]: [x, y] } };
     }
+    case 'setMode':
+      return {
+        ...state,
+        graph: {
+          ...state.graph,
+          mode: action.payload.mode,
+          selectedNode: action.payload.id,
+        },
+      };
+    case 'resetMode':
+      return {
+        ...state,
+        graph: { ...state.graph, mode: null, selectedNode: null },
+        mode: '',
+        id: null,
+      };
+    case 'addConnection':
+      return {
+        ...state,
+        graph: {
+          ...state.graph,
+          connections: [...state.graph.connections, action.payload.connection],
+        },
+      };
     default:
       return state;
   }

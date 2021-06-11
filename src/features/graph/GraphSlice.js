@@ -1,16 +1,27 @@
 const initialState = {
   connections: [],
-  cursor: '',
-  id: 0,
+  mode: '',
+  id: null,
 };
 
 export default function GraphReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SET_CURSOR':
+    case 'setMode':
       return {
         ...state,
-        cursor: action.payload.cursor,
+        mode: action.payload.mode,
         id: action.payload.id,
+      };
+    case 'resetMode':
+      return {
+        ...state,
+        mode: '',
+        id: null,
+      };
+    case 'addConnection':
+      return {
+        ...state,
+        connections: [...state.connections, action.payload.connection],
       };
     default:
       return state;
