@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/love-the-args/static/css/main.2ee3b107.chunk.css",
-    "main.js": "/love-the-args/static/js/main.b10da27c.chunk.js",
-    "main.js.map": "/love-the-args/static/js/main.b10da27c.chunk.js.map",
+    "main.css": "/love-the-args/static/css/main.1e82a88c.chunk.css",
+    "main.js": "/love-the-args/static/js/main.a20247bc.chunk.js",
+    "main.js.map": "/love-the-args/static/js/main.a20247bc.chunk.js.map",
     "runtime-main.js": "/love-the-args/static/js/runtime-main.0281904a.js",
     "runtime-main.js.map": "/love-the-args/static/js/runtime-main.0281904a.js.map",
-    "static/js/2.f6a3f3d7.chunk.js": "/love-the-args/static/js/2.f6a3f3d7.chunk.js",
-    "static/js/2.f6a3f3d7.chunk.js.map": "/love-the-args/static/js/2.f6a3f3d7.chunk.js.map",
+    "static/js/2.0fd525cb.chunk.js": "/love-the-args/static/js/2.0fd525cb.chunk.js",
+    "static/js/2.0fd525cb.chunk.js.map": "/love-the-args/static/js/2.0fd525cb.chunk.js.map",
     "static/js/3.960fe524.chunk.js": "/love-the-args/static/js/3.960fe524.chunk.js",
     "static/js/3.960fe524.chunk.js.map": "/love-the-args/static/js/3.960fe524.chunk.js.map",
     "index.html": "/love-the-args/index.html",
-    "static/css/main.2ee3b107.chunk.css.map": "/love-the-args/static/css/main.2ee3b107.chunk.css.map",
-    "static/js/2.f6a3f3d7.chunk.js.LICENSE.txt": "/love-the-args/static/js/2.f6a3f3d7.chunk.js.LICENSE.txt"
+    "static/css/main.1e82a88c.chunk.css.map": "/love-the-args/static/css/main.1e82a88c.chunk.css.map",
+    "static/js/2.0fd525cb.chunk.js.LICENSE.txt": "/love-the-args/static/js/2.0fd525cb.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0281904a.js",
-    "static/js/2.f6a3f3d7.chunk.js",
-    "static/css/main.2ee3b107.chunk.css",
-    "static/js/main.b10da27c.chunk.js"
+    "static/js/2.0fd525cb.chunk.js",
+    "static/css/main.1e82a88c.chunk.css",
+    "static/js/main.a20247bc.chunk.js"
   ]
 }
