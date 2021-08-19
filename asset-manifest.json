@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/love-the-args/static/css/main.a321e7c2.chunk.css",
+    "main.css": "/love-the-args/static/css/main.2b3e514c.chunk.css",
     "main.js": "/love-the-args/static/js/main.522db4cc.chunk.js",
     "main.js.map": "/love-the-args/static/js/main.522db4cc.chunk.js.map",
     "runtime-main.js": "/love-the-args/static/js/runtime-main.8d906df0.js",
@@ -10,13 +10,13 @@
     "static/js/3.f0a2ad47.chunk.js": "/love-the-args/static/js/3.f0a2ad47.chunk.js",
     "static/js/3.f0a2ad47.chunk.js.map": "/love-the-args/static/js/3.f0a2ad47.chunk.js.map",
     "index.html": "/love-the-args/index.html",
-    "static/css/main.a321e7c2.chunk.css.map": "/love-the-args/static/css/main.a321e7c2.chunk.css.map",
+    "static/css/main.2b3e514c.chunk.css.map": "/love-the-args/static/css/main.2b3e514c.chunk.css.map",
     "static/js/2.81de7c97.chunk.js.LICENSE.txt": "/love-the-args/static/js/2.81de7c97.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8d906df0.js",
     "static/js/2.81de7c97.chunk.js",
-    "static/css/main.a321e7c2.chunk.css",
+    "static/css/main.2b3e514c.chunk.css",
     "static/js/main.522db4cc.chunk.js"
   ]
 }
