@@ -1,20 +1,48 @@
+.bottom {
+  display: grid;
+  grid-area: bottom;
+  position: relative;
+  grid-template-areas: 'left right';
+  height: 75vh;
+}
+
 .left_panel {
-  grid-area: 'left';
+  grid-area: left;
+  position: absolute;
+  left: 0px;
+  border: 1px solid rgb(241, 241, 241);
+  border-radius: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  width: 100%;
+  height: 75%;
+  resize: both;
+  background-color: white;
+  z-index: 10;
 }
 
 .right_panel {
-  grid-area: 'right';
+  grid-area: right;
+  position: absolute;
+  right: 0px;
+  overflow-y: scroll;
+  padding-bottom: 30px;
+  z-index: 9;
 }
 
-.bottom {
+.top {
+  grid-area: top;
+  z-index: 10;
   display: grid;
-  grid-area: 'bottom';
-  grid-template-areas: 'left right';
+  grid-template-areas: 'top_left top_right';
 }
 
 .right_buttons {
   text-align: center;
-  grid-area: 'top_right';
+  grid-area: top_right;
+  float: right;
   padding-left: 8.5em;
   width: 16em;
   background-color: beige;
@@ -25,26 +53,21 @@
 
 .load_save_buttons {
   text-align: right;
-  grid-area: 'top_left';
+  grid-area: top_left;
+  float: left;
   background-color: beige;
   margin-bottom: 1em;
   border-bottom-left-radius: 0.25em;
   border-top-left-radius: 0.25em;
 }
 
-.top {
-  position: sticky;
-  top: 0;
-  grid-area: 'top';
-  z-index: 99;
-  display: grid;
-  grid-template-areas: 'top_left top_right';
-}
-
 .App {
   display: grid;
-  grid-template-areas: 'top', 'bottom';
+  grid-template-areas:
+    'top'
+    'bottom';
   grid-gap: 0;
   justify-content: center;
   align-items: center;
+  position: center;
 }
