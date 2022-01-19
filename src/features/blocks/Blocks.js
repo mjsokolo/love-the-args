@@ -57,8 +57,6 @@ export default function Blocks() {
         onSelect={(e) => {
           e.added.forEach((el) => {
             el.classList.add('selected');
-            console.log(el.id);
-            console.log(el.className);
             el.style.backgroundColor = 'lightgrey';
           });
           e.removed.forEach((el) => {

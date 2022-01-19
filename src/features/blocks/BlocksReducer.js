@@ -11,6 +11,7 @@ const initialState = {
   caret: -1,
   activeId: 'id1',
   order: ['id1'],
+  groups: {},
   txts: {
     id1: JSON.stringify(
       convertToRaw(EditorState.createEmpty().getCurrentContent())
@@ -277,6 +278,45 @@ export default function BlocksReducer(state = initialState, action) {
       return {
         ...state,
         graph: { ...state.graph, connections: newConnections },
+      };
+    }
+    case 'groupIds': {
+      const { start, end } = action.payload;
+      const { order } = state;
+      const { groups } = state;
+      const groupId = nanoid();
+
+      // Get array of selected group's ids
+      const startIdx = order.indexOf(start);
+      const endIdx = order.indexOf(end);
+      const selectedGroup = order.slice(startIdx, endIdx + 1);
+
+      // Get all ids from existing groups
+      const idsInExistingGroups = new Set();
+      Object.entries(groups).forEach((g) => {
+        const sIdx = order.indexOf(g[0]);
+        const eIdx = order.indexOf(g[1]);
+        const ids = order.slice(sIdx, eIdx + 1);
+        ids.forEach((id) => idsInExistingGroups.add(id));
+      });
+
+      // Checks that the selected group is valid:
+      // No id in selected group should exist within a pre-existing group
+      let containsElement = false;
+      selectedGroup.forEach((id) => {
+        if (idsInExistingGroups.has(id)) {
+          containsElement = true;
+        }
+      });
+      if (containsElement) {
+        return state;
+      }
+
+      // Returns updated groups object
+
+      return {
+        ...state,
+        groups: { ...state.groups, [groupId]: [start, end] },
       };
     }
     default:
