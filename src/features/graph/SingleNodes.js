@@ -7,8 +7,16 @@ import { NodeMenuId, MODES } from './GraphContextMenu';
 import './css/Nodes.css';
 import HistoricalStyles from '../../config/HistoricalStyles';
 
-export default function SingleNode(props) {
-  const { id, groupPosition } = props;
+export default function SingleNodes() {
+  const order = useSelector((state) => state.blocks.present.order);
+  const nodes = order.map((element) => (
+    <SingleNode id={element} key={element} groupPosition={[0, 0]} />
+  ));
+  return nodes;
+}
+
+function SingleNode(props) {
+  const { id } = props;
   const dispatch = useDispatch();
   const position = useSelector((state) => state.blocks.present.positions[id]);
   const txt = useSelector((state) => state.blocks.present.txts[id]);
@@ -39,8 +47,8 @@ export default function SingleNode(props) {
       },
     });
   };
-  const x = position[0] - groupPosition[0];
-  const y = position[1] - groupPosition[1];
+  const x = position[0];
+  const y = position[1];
   return (
     <ContextMenuTrigger id={NodeMenuId} key={id} holdToDisplay={-1}>
       <Draggable
@@ -51,7 +59,7 @@ export default function SingleNode(props) {
         // position={{ x, y }}
         bounds={{ left: 0, top: 0 }}
       >
-        <fieldset className="node" id={id} style={style}>
+        <fieldset className="node single-node" id={id} style={style}>
           <legend className="label" style={{ color: border }}>
             {label}
           </legend>

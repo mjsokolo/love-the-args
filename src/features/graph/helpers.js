@@ -4,20 +4,18 @@
  * @param {object} groups - group start and ends @example {start: 'end'}
  * @return {list} nodesMap - order with groups @example ['a', ['start', 'b', 'end']]
  */
-export function createGroupList(order, group) {
+export function fetchGroupNodes(order, group) {
   const groupList = [];
   let insideGroup = false;
-  let startId = '';
 
   // Traverse order & convert group into group list
   for (let i = 0; i < order.length; i += 1) {
     const id = order[i];
-    if (Object.hasOwnProperty.call(group, id)) {
+    if (group[0] === id) {
       // traversing start of group
       insideGroup = true;
       groupList.push(id);
-      startId = id;
-    } else if (id === group[startId]) {
+    } else if (id === group[1]) {
       // traversing end of group id
       insideGroup = false;
       groupList.push(id);

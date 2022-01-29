@@ -4,7 +4,6 @@ import Xarrow from 'react-xarrows';
 
 export default function SequentialPath() {
   const order = useSelector((state) => state.blocks.present.order);
-  console.log(order);
   // triggers re-render on state change
   const positions = useSelector((state) => state.blocks.present.positions);
   const groups = useSelector((state) => state.blocks.present.groups);
@@ -13,7 +12,6 @@ export default function SequentialPath() {
   for (let i = 0; i < order.length - 1; i += 1) {
     links[order[i]] = order[i + 1];
   }
-  console.log(links);
   const path = [];
 
   Object.keys(links).forEach((key) => {
@@ -33,6 +31,5 @@ export default function SequentialPath() {
     );
   });
 
-  console.log(path);
   return path;
 }

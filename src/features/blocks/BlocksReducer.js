@@ -49,8 +49,13 @@ export default function BlocksReducer(state = initialState, action) {
         return updatedPositions;
       });
 
+      // backwards-compatibility change
+      // Add a groups state if it doesn't already exist
+      const groups = action.payload.state.groups || {};
+
       return {
         ...action.payload.state,
+        groups,
         positions: updatedPositions,
       };
     }
@@ -188,6 +193,22 @@ export default function BlocksReducer(state = initialState, action) {
         contentState1.getBlockMap()
       );
 
+      // Adjust groups state if merges occur on GroupNode Boundaries
+      const { groups } = state;
+      const newGroups = {};
+      Object.keys(groups).map((key) => {
+        if (id2 === groups[key][0]) {
+          // the starting node of a group is merging with node outside of group
+          newGroups[key] = [state.order[idx + 1], groups[key][1]];
+        } else if (id2 === groups[key][1]) {
+          // the ending node of a group is merging with the penultimate node of group
+          newGroups[key] = [groups[key][0], state.order[idx - 1]];
+        } else {
+          // the merging node is not a defining node of a group
+          newGroups[key] = groups[key];
+        }
+      });
+
       return {
         ...state,
         activeId: id1,
@@ -205,6 +226,7 @@ export default function BlocksReducer(state = initialState, action) {
           [id1]: state.notes[id1] + state.notes[id2],
         },
         graph: { ...state.graph, connections: newConnections },
+        groups: newGroups,
       };
     }
     case 'toggleNote': {
