@@ -333,9 +333,10 @@ export default function BlocksReducer(state = initialState, action) {
 
       // Get all ids from existing groups
       const idsInExistingGroups = new Set();
-      Object.entries(groups).forEach((g) => {
-        const sIdx = order.indexOf(g[0]);
-        const eIdx = order.indexOf(g[1]);
+      Object.keys(groups).forEach((groupId) => {
+        const group = groups[groupId];
+        const sIdx = order.indexOf(group[0]);
+        const eIdx = order.indexOf(group[1]);
         const ids = order.slice(sIdx, eIdx + 1);
         ids.forEach((id) => idsInExistingGroups.add(id));
       });
@@ -353,10 +354,60 @@ export default function BlocksReducer(state = initialState, action) {
       }
 
       // Returns updated groups object
-
       return {
         ...state,
         groups: { ...state.groups, [groupId]: [start, end] },
+      };
+    }
+    case 'ungroupIds': {
+      const { start, end } = action.payload;
+      const { order, groups } = state;
+
+      // Get selection ids
+      const startIdx = order.indexOf(start);
+      const endIdx = order.indexOf(end);
+      const selection = order.slice(startIdx, endIdx + 1);
+
+      // For each group,
+      // if any of the selected nodes are in the group,
+      // then remove that group, its boxes, and its connections
+      const newGroups = { ...groups };
+      const newBoxes = { ...state.graph.boxes };
+      let newConnections = [...state.graph.connections];
+
+      Object.keys(groups).forEach((groupId) => {
+        // Get ids in group
+        const g = groups[groupId];
+        const sIdx = order.indexOf(g[0]);
+        const eIdx = order.indexOf(g[1]);
+        const ids = order.slice(sIdx, eIdx + 1);
+
+        // Get ids that are shared by group and selection
+        const sharedIds = ids.filter((id) => selection.indexOf(id) !== -1);
+
+        // If group contains selected ids,
+        // Remove group & group's boxes and connections
+        if (sharedIds.length > 0) {
+          delete newGroups[groupId];
+          delete newBoxes[groupId];
+          newConnections = [];
+          const temp = [...state.graph.connections];
+          temp.forEach((c) => {
+            if (groupId !== c[0] && groupId !== c[1]) {
+              newConnections.push(c);
+            }
+          });
+        }
+      });
+
+      return {
+        ...state,
+        groups: newGroups,
+        graph: {
+          ...state.graph,
+          boxes: newBoxes,
+          connections: newConnections,
+        },
       };
     }
     default:
