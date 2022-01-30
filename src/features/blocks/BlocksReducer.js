@@ -195,6 +195,7 @@ export default function BlocksReducer(state = initialState, action) {
 
       // Adjust groups state if merges occur on GroupNode Boundaries
       const { groups } = state;
+      const newBoxes = { ...state.graph.boxes };
       const newGroups = {};
       Object.keys(groups).map((key) => {
         if (id2 === groups[key][0]) {
@@ -206,6 +207,19 @@ export default function BlocksReducer(state = initialState, action) {
         } else {
           // the merging node is not a defining node of a group
           newGroups[key] = groups[key];
+        }
+        // remove group, it's box, and connections if the end node is the same as start node
+        if (newGroups[key][0] === newGroups[key][1]) {
+          delete newGroups[key]; // delete group
+          delete newBoxes[key]; // delete box
+          // delete any connections of the deleted group
+          const temp = [...newConnections];
+          newConnections = [];
+          temp.forEach((c) => {
+            if (key !== c[0] && key !== c[1]) {
+              newConnections.push(c);
+            }
+          });
         }
       });
 
@@ -225,7 +239,7 @@ export default function BlocksReducer(state = initialState, action) {
           ...state.notes,
           [id1]: state.notes[id1] + state.notes[id2],
         },
-        graph: { ...state.graph, connections: newConnections },
+        graph: { ...state.graph, connections: newConnections, boxes: newBoxes },
         groups: newGroups,
       };
     }
@@ -308,6 +322,10 @@ export default function BlocksReducer(state = initialState, action) {
       const { groups } = state;
       const groupId = nanoid();
 
+      // Grouping single node is not allowed
+      if (start === end) {
+        return state;
+      }
       // Get array of selected group's ids
       const startIdx = order.indexOf(start);
       const endIdx = order.indexOf(end);
